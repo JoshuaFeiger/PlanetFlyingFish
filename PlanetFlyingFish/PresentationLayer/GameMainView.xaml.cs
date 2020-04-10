@@ -26,6 +26,10 @@ namespace PlanetFlyingFish.PresentationLayer
 
         public GameMainView(GameMainViewModel gameMainViewModel)
         {
+            scrollPriorityMessagesOnNextUpdate = false;
+
+            scrollSideMessagesOnNextUpdate = false;
+
             _gameMainViewModel = gameMainViewModel;
 
             InitializeComponent();
@@ -38,8 +42,38 @@ namespace PlanetFlyingFish.PresentationLayer
 
         private void MapArtSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _gameMainViewModel.SideMessages.Add("e ");
-            //todo: So it does set. We've gotta figure out why, then, the other stuff isn't updating.
+            ComboBox comboBox = sender as ComboBox;
+            ComboBoxItem mapArtSelectedItem = comboBox.SelectedItem as ComboBoxItem;
+
+            if (mapArtSelectedItem.Content != null)
+            {
+                string mapArtSelection = mapArtSelectedItem.Content.ToString();
+                _gameMainViewModel.CentralImageChanged(mapArtSelection);
+            }
         }
+
+        private void PriorityMessagesChanged(object sender, TextChangedEventArgs e)
+        {
+            if (scrollPriorityMessagesOnNextUpdate)
+            {
+                PriorityMessageBox.ScrollToVerticalOffset(PriorityMessageBox.VerticalOffset + 40);
+            }
+
+            scrollPriorityMessagesOnNextUpdate = true;
+        }
+
+        private void SideMessagesChanged(object sender, TextChangedEventArgs e)
+        {
+            if (scrollSideMessagesOnNextUpdate)
+            {
+                SideMessageBox.ScrollToVerticalOffset(SideMessageBox.VerticalOffset + 35);
+            }
+
+            scrollSideMessagesOnNextUpdate = true;
+        }
+
+        private bool scrollPriorityMessagesOnNextUpdate { get; set; }
+
+        private bool scrollSideMessagesOnNextUpdate { get; set; }
     }
 }

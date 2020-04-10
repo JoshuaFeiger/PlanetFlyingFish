@@ -195,7 +195,7 @@
                         MaxHeight="100"
                         Margin="0,0,6,0">
                         <TextBox
-                            x:Name="PriorityMessageBlock"
+                            x:Name="PriorityMessageBox"
                             Style="{StaticResource MainPanelTextBoxStyle}"
                             Width="200"
                             MinHeight="100"
@@ -203,7 +203,9 @@
                             Background="White"
                             TextWrapping="Wrap"
                             FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
-                            FontSize="18"></TextBox>
+                            FontSize="18"
+                            VerticalScrollBarVisibility="Visible"
+                            TextChanged="PriorityMessagesChanged"></TextBox>
                     </ScrollViewer>
                     <Label
                         Margin="0,12,0,0"
@@ -216,7 +218,7 @@
                         MaxHeight="70"
                         Margin="0,0,6,0">
                         <TextBox
-                            x:Name="SideMessageBlock"
+                            x:Name="SideMessageBox"
                             Style="{StaticResource MainPanelTextBoxStyle}"
                             Width="200"
                             MinHeight="70"
@@ -224,7 +226,9 @@
                             Background="White"
                             TextWrapping="Wrap"
                             FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
-                            FontSize="18"></TextBox>
+                            FontSize="18"
+                            VerticalScrollBarVisibility="Visible"
+                            TextChanged="SideMessagesChanged"></TextBox>
                     </ScrollViewer>
                     <Label
                         Margin="0,25,0,0"
@@ -251,11 +255,15 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel
-                MinWidth="300"
+                MinWidth="320"
                 Orientation="Vertical"
                 HorizontalAlignment="Center">
-                <Image HorizontalAlignment="Center" Height="300" Margin="0,0,0,0" VerticalAlignment="Top" 
-                Source="{Binding CentralImageDisplayPath}"/>
+                <Image 
+                    HorizontalAlignment="Center" 
+                    Height="300" 
+                    Margin="0,0,0,0" 
+                    VerticalAlignment="Top"
+                    Source="{Binding CentralImageDisplayPath}"/>
                 <StackPanel
                     Orientation="Horizontal"
                     HorizontalAlignment="Center">

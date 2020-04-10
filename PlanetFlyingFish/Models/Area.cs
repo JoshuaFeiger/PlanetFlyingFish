@@ -12,6 +12,15 @@ namespace PlanetFlyingFish.Models
 
 		private int _timesVisited;
 
+		private string _artName;
+
+		public string ArtName
+		{
+			get { return _artName; }
+			set { _artName = value; }
+		}
+
+
 		public int TimesVisited
 		{
 			get { return _timesVisited; }

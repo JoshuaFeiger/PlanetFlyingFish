@@ -15,7 +15,22 @@ namespace PlanetFlyingFish.DataLayer
             {
                 "Hello.",
                 "These are the initial priority messages.",
-                "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                "And here is a very long message so that you can feel less lonely in this bare-bones first test of the engine we're using to make this subpar game. Thank you for trying it, by the way. And thank you for reading this message. It means a lot to me that someone would do something like that, and that someone would read this message, especially considering that you have no idea when I'm going to stop talking.",
+                "",
+                "...Are you actually interested in this text, or do you just want to see where it ends? Are you paying attention to me at all? Is anyone? If no one is, is there a reason I should keep persevering at the things I do? Should I do them just to say I did them? Should I do them because they're something I always dreamed to do? If that's such a good reason, why does my dream pursuit always seem to go so poorly...",
+                "I don't know anymore... Why should I keep going? If you've scrolled down this far, you're probably just making sure scrolling works right. Well, it does. No need to keep going down. Unless you're trying to find the bottom... \nWait... \nYou're not listening anyway...",
+                "*sigh*",
+                "Well, I guess it's time to finish writing this and move on... if there's any reason to...",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "...",
+                "...I'm sure I'll find it."
             };
         }
 
@@ -24,7 +39,9 @@ namespace PlanetFlyingFish.DataLayer
             return new List<string>
             {
                 "Hello.",
-                "These are the initial side-messages."
+                "These are the initial side-messages.",
+                "...",
+                "Is there anything more you're expecting?"
             };
         }
 

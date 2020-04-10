@@ -68,6 +68,7 @@
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\ObservableObject.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\UpdatingStringList.cs" />
     <Compile Include="PresentationLayer\GameMainView.xaml.cs">
       <DependentUpon>GameMainView.xaml</DependentUpon>
     </Compile>
@@ -110,7 +111,14 @@
     <Resource Include="Resource\Fonts\CaveStoryFont.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Images\MapTest.png" />
+    <Resource Include="Resource\Images\Map01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\SurfaceRoomArt01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
