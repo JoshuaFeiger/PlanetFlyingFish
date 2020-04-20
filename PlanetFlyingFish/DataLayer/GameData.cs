@@ -57,7 +57,7 @@ namespace PlanetFlyingFish.DataLayer
                 //inital player properties
                 ID = 6384,
                 Name = "Unit #6384",
-                LocationID = "SurfaceRoom001",
+                AreaID = "SurfRoom001",
                 HealthPoints = 100,
             };
         }

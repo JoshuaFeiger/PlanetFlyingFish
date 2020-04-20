@@ -8,7 +8,14 @@ namespace PlanetFlyingFish.Models
 {
     public class Player : Character
     {
+        public void Die()
+        {
+            _deathCount++;
+        }
+
         private int _deathCount;
+
+        protected string _areaID;
 
         public int DeathCount
         {
@@ -16,10 +23,20 @@ namespace PlanetFlyingFish.Models
             set { _deathCount = value; }
         }
 
-        public void Die()
+        public string AreaID
         {
-            _deathCount++;
+            get { return _areaID; }
+            set { _areaID = value; }
         }
 
+        public int CurrentAreaPos(List<Area> areasToSearch)
+        {
+            List<string> listOfAreaIDs = new List<string>();
+            foreach (Area area in areasToSearch)
+            {
+                listOfAreaIDs.Add(area.AreaID);
+            }
+            return listOfAreaIDs.IndexOf(_areaID);
+        }
     }
 }

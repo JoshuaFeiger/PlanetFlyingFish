@@ -32,11 +32,10 @@ namespace PlanetFlyingFish.Models
 
         }
 
-        public Character(int id, string name, string locationID, int healthPoints)
+        public Character(int id, string name, int healthPoints)
         {
             _id = id;
             _name = name;
-            _locationID = locationID;
             _healthPoints = healthPoints;
         }
 

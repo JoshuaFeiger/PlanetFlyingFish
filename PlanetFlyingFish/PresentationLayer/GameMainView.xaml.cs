@@ -75,5 +75,10 @@ namespace PlanetFlyingFish.PresentationLayer
         private bool scrollPriorityMessagesOnNextUpdate { get; set; }
 
         private bool scrollSideMessagesOnNextUpdate { get; set; }
+
+        private void ConfirmTravelButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameMainViewModel.TravelToArea(TravelToLocationCombo.SelectedIndex);
+        }
     }
 }

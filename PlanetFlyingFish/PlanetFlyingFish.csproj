@@ -68,7 +68,6 @@
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\ObservableObject.cs" />
     <Compile Include="Models\Player.cs" />
-    <Compile Include="Models\UpdatingStringList.cs" />
     <Compile Include="PresentationLayer\GameMainView.xaml.cs">
       <DependentUpon>GameMainView.xaml</DependentUpon>
     </Compile>
@@ -117,6 +116,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Images\SurfaceRoomArt01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Images\SurfaceRoomArt02.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

@@ -17,11 +17,12 @@ namespace PlanetFlyingFish.PresentationLayer
         public GameMainViewModel()
 		{
             _playerOne = new Player();
+            _areas = DefaultAreas();
             _priorityMessages = new List<string>
             {
                 "Hello.",
                 "These are the default priority messages.",
-                "Method()"
+                "Method ()"
             };
             _sideMessages = new List<string>
             {
@@ -30,17 +31,17 @@ namespace PlanetFlyingFish.PresentationLayer
                 "Method ()"
             };
             _centralImagePath = "/PlanetFlyingFish;component/Resource/Images/MapTest.png";
-            _locationInfo = "Hello, person. We are at a place.";
             _centralImageArtChosen = "Map";
             MapArtName = "Map01";
             UpdatePriorityMessages();
             UpdateSideMessages();
         }
 
-		public GameMainViewModel(Player player, List<string> initialMessages)
+		public GameMainViewModel(Player player, List<string> initialPriorityMessages)
 		{
 			_playerOne = player;
-			_priorityMessages = initialMessages;
+            _areas = DefaultAreas();
+            _priorityMessages = initialPriorityMessages;
             _sideMessages = new List<string>
             {
                 "Hello.",
@@ -48,7 +49,6 @@ namespace PlanetFlyingFish.PresentationLayer
                 "Method (player, initialPriorityMessages)"
             };
             _centralImagePath = "/PlanetFlyingFish;component/Resource/Images/MapTest.png";
-            _locationInfo = "Hello, person. We are at a place.";
             _centralImageArtChosen = "Map";
             MapArtName = "Map01";
             UpdatePriorityMessages();
@@ -58,10 +58,23 @@ namespace PlanetFlyingFish.PresentationLayer
         public GameMainViewModel(Player player, List<string> initialPriorityMessages, List<string> initialSideMessages)
         {
             _playerOne = player;
+            _areas = DefaultAreas();
             _priorityMessages = initialPriorityMessages;
             _sideMessages = initialSideMessages;
             _centralImagePath = "/PlanetFlyingFish;component/Resource/Images/MapTest.png";
-            _locationInfo = "Hello, person. We are at a place.";
+            _centralImageArtChosen = "Map";
+            MapArtName = "Map01";
+            UpdatePriorityMessages();
+            UpdateSideMessages();
+        }
+
+        public GameMainViewModel(Player player, List<Area> initialAreas, List<string> initialPriorityMessages, List<string> initialSideMessages)
+        {
+            _playerOne = player;
+            _areas = initialAreas;
+            _priorityMessages = initialPriorityMessages;
+            _sideMessages = initialSideMessages;
+            _centralImagePath = "/PlanetFlyingFish;component/Resource/Images/MapTest.png";
             _centralImageArtChosen = "Map";
             MapArtName = "Map01";
             UpdatePriorityMessages();
@@ -84,13 +97,85 @@ namespace PlanetFlyingFish.PresentationLayer
                     CentralImageDisplayPath = $"\\Resource\\Images\\{MapArtName}.png";
                     break;
                 case "Art":
-                    //todo: add in actual art name here
-                    CentralImageDisplayPath = $"\\Resource\\Images\\SurfaceRoomArt01.png";
+                    CentralImageDisplayPath = $"\\Resource\\Images\\{PlayerArea(_playerOne).ArtName}.png";
                     break;
                 default:
                     throw new Exception("No valid option was sent.");
                     //break;
             }
+        }
+
+        /// <summary>
+        /// Moves a Noun object from one Area to another.
+        /// </summary>
+        /// <param name="nounPos">The position of our target item in the Nouns list of movingFrom.</param>
+        public void MoveNoun(int nounPos, ref Area movingFrom, ref Area movingTo)
+        {
+            AnyNoun nounToMove = movingTo.Nouns[nounPos];
+        }
+
+        /// <summary>
+        /// Searches an Area object for a Noun, and returns its position.
+        /// </summary>
+        private int FindNounPos(AnyNoun nounToFind, Area areaToSearch)
+        {
+            return areaToSearch.Nouns.IndexOf(nounToFind);
+        }
+
+        private int FindAreaPos(string areaID, List<Area> areasToSearch)
+        {
+            List<string> listOfAreaIDs = new List<string>();
+            foreach (Area area in areasToSearch)
+            {
+                listOfAreaIDs.Add(area.AreaID);
+            }
+            return listOfAreaIDs.IndexOf(areaID);
+        }
+
+        private Area PlayerArea(Player player)
+        {
+            return _areas[player.CurrentAreaPos(_areas)];
+        }
+
+        public void TravelToArea(int areaIndex)
+        {
+            _playerOne.AreaID = PlayerArea(_playerOne).ConnectedAreas[areaIndex];
+            AreaNameDisplay = "this is just to update";
+            LocationInfo = "Yeah, that's all we do.";
+            AccessibleAreas = new List<string> { "Why do I even bother?" };
+            CentralImageChanged(_centralImageArtChosen);
+        }
+
+        private List<Area> DefaultAreas()
+        {
+            List<Area> defaultAreas = new List<Area>
+            {
+                new Area
+                {
+                    AreaID = "SurfRoom001",
+                    AreaName = "Surface Room 001",
+                    ConnectedAreas = new List<string>{"SurfRoom002"},
+                    LocationInfo = "You woke up in this cold, dark room.",
+                    ArtName = "SurfaceRoomArt01"
+                },
+                new Area
+                {
+                    AreaID = "SurfRoom002",
+                    AreaName = "Surface Room 002",
+                    ConnectedAreas = new List<string>{ "SurfRoom003", "SurfRoom001" },
+                    LocationInfo = "Some room next to the cold, dark room you woke up in.",
+                    ArtName = "SurfaceRoomArt01"
+                },
+                new Area
+                {
+                    AreaID = "SurfRoom003",
+                    AreaName = "Surface Room 003",
+                    ConnectedAreas = new List<string>{ "SurfRoom001", "SurfRoom002"},
+                    LocationInfo = "A duck-shaped room. (Don't ask why.)",
+                    ArtName = "SurfaceRoomArt02"
+                }
+            };
+            return defaultAreas;
         }
 
         //              --------------------------------
@@ -119,13 +204,13 @@ namespace PlanetFlyingFish.PresentationLayer
 
         private Player _playerOne;
 
+        private List<Area> _areas;
+
         private List<string> _priorityMessages;
 
         private List<string> _sideMessages;
 
         private string _centralImagePath;
-
-        private string _locationInfo;
 
         private string _priorityMessageDisplay;
 
@@ -144,8 +229,19 @@ namespace PlanetFlyingFish.PresentationLayer
         public Player PlayerOne
 		{
 			get { return _playerOne; }
-			set { _playerOne = value; }
+			set 
+            { 
+                _playerOne = value;
+                OnPropertyChanged(nameof(PlayerOne));
+                OnPropertyChanged(nameof(PlayerInfoDisplay));
+            }
 		}
+
+        public List<Area> Areas
+        {
+            get { return _areas; }
+            set { _areas = value; }
+        }
 
         public List<string> PriorityMessages
         {
@@ -173,32 +269,35 @@ namespace PlanetFlyingFish.PresentationLayer
         /// </summary>
         public string PriorityMessageDisplay
 		{
+            get { return _priorityMessageDisplay; }
             set
             {
                 _priorityMessageDisplay = MessageDisplayAsString(_priorityMessages);
                 OnPropertyChanged(nameof(PriorityMessageDisplay));
             }
-            get { return _priorityMessageDisplay; }
         }
 
         public string SideMessageDisplay
         {
+            get { return _sideMessageDisplay; }
             set
             {
                 _sideMessageDisplay = MessageDisplayAsString(_sideMessages);
                 OnPropertyChanged(nameof(SideMessageDisplay)); 
             }
-            get { return _sideMessageDisplay; }
         }
 
         public string PlayerInfoDisplay
         {
-            get {
+            get 
+            {
                 return $"{PlayerOne.Name} \n" +
               $"ID: {PlayerOne.ID} \n" +
               $"{PlayerOne.HealthPoints} HP";
             }
+            set { OnPropertyChanged(nameof(PlayerInfoDisplay)); }
         }
+
         public string CentralImageDisplayPath
         {
             get { return _centralImagePath; }
@@ -211,8 +310,16 @@ namespace PlanetFlyingFish.PresentationLayer
 
         public string LocationInfo
         {
-            get { return _locationInfo; }
-            set { _locationInfo = value; }
+            get 
+            {
+                string locationInfo = "Error. Could not find info.";
+                if (!(FindAreaPos(_playerOne.AreaID, _areas) == -1))
+                {
+                    locationInfo = Areas[FindAreaPos(_playerOne.AreaID, _areas)].LocationInfo;
+                }
+                return locationInfo;
+            }
+            set { OnPropertyChanged(nameof(LocationInfo)); }
         }
 
         public string MapArtName
@@ -222,6 +329,40 @@ namespace PlanetFlyingFish.PresentationLayer
             { 
                 _mapArtName = value;
                 CentralImageChanged(_centralImageArtChosen);
+            }
+        }
+
+        public string AreaNameDisplay
+        {
+            get 
+            {
+                string areaName = "Area_Error";
+                if (!(_playerOne.CurrentAreaPos(Areas) == -1))
+                {
+                    areaName = PlayerArea(_playerOne).AreaName;
+                }
+                return areaName;
+            }
+            set 
+            {
+                OnPropertyChanged(nameof(AreaNameDisplay)); 
+            }
+        }
+
+        public List<string> AccessibleAreas
+        {
+            get
+            {
+                List<string> accessibleAreas = new List<string>();
+                foreach (string id in PlayerArea(_playerOne).ConnectedAreas)
+                {
+                    accessibleAreas.Add(Areas[FindAreaPos(id, Areas)].AreaName);
+                }
+                return accessibleAreas;
+            }
+            set
+            {
+                OnPropertyChanged(nameof(AccessibleAreas));
             }
         }
 

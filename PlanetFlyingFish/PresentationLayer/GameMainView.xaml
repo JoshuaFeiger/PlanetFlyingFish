@@ -246,7 +246,7 @@
                             Width="200"
                             MinHeight="50"
                             TextWrapping="Wrap"
-                            Text="{Binding LocationInfo}"
+                            Text="{Binding LocationInfo, Mode=OneWay}"
                             Background="White" 
                             FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
                             FontSize="18"
@@ -266,7 +266,8 @@
                     Source="{Binding CentralImageDisplayPath}"/>
                 <StackPanel
                     Orientation="Horizontal"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    MaxWidth="310">
                     <ComboBox
                         x:Name="MapArtSelector"
                         Width="100"
@@ -286,8 +287,8 @@
                     </ComboBox>
                     <Label
                         x:Name="LocationLabel" 
-                        Margin="75,0,0,0"
-                        Content="{Binding PlayerOne.LocationID}" 
+                        Margin="20,0,0,0"
+                        Content="{Binding AreaNameDisplay}" 
                         FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
                         FontSize="22"></Label>
                 </StackPanel>
@@ -302,7 +303,9 @@
                     Width="190" 
                     Height="22"
                     FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
-                    FontSize="18"></ComboBox>
+                    FontSize="18"
+                    ItemsSource="{Binding AccessibleAreas}"
+                    SelectedItem="{Binding AccessibleAreas[0]}"></ComboBox>
                 <Button
                     x:Name="ConfirmTravelButton"
                     Style="{StaticResource MainPanelButtonStyle}"
@@ -311,7 +314,7 @@
                     Height="30"
                     Margin="0,12,0,0" 
                     FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
-                    FontSize="18"/>
+                    FontSize="18" Click="ConfirmTravelButton_Click"/>
                 <StackPanel
                     Orientation="Vertical"
                     HorizontalAlignment="Center"

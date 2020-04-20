@@ -10,7 +10,6 @@ namespace PlanetFlyingFish.Models
     {
         protected int _id;
         protected string _name;
-        protected string _locationID;
         protected int _healthPoints;
         protected bool _canPickUp;
 
@@ -25,12 +24,6 @@ namespace PlanetFlyingFish.Models
 			get { return _name; }
 			set { _name = value; }
 		}
-
-        public string LocationID
-        {
-            get { return _locationID; }
-            set { _locationID = value; }
-        } 
 
 		public int HealthPoints
 		{
