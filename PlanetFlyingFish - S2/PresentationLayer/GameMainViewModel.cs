@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using PlanetFlyingFish.Models;
 
 namespace PlanetFlyingFish.PresentationLayer
@@ -139,11 +140,25 @@ namespace PlanetFlyingFish.PresentationLayer
 
         public void TravelToArea(int areaIndex)
         {
-            _playerOne.AreaID = PlayerArea(_playerOne).ConnectedAreas[areaIndex];
-            AreaNameDisplay = "this is just to update";
-            LocationInfo = "Yeah, that's all we do.";
-            AccessibleAreas = new List<string> { "Why do I even bother?" };
-            CentralImageChanged(_centralImageArtChosen);
+            if (!(AccessibleAreas[areaIndex] == "ERR: DOESNOTEXIST"))
+            {
+                try
+                {
+                    _playerOne.AreaID = PlayerArea(_playerOne).ConnectedAreas[areaIndex];
+                    AreaNameDisplay = "this is just to update";
+                    LocationInfo = "Yeah, that's all we do.";
+                    AccessibleAreas = new List<string> { "Why do I even bother?" };
+                    CentralImageChanged(_centralImageArtChosen);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    MessageBox.Show($"Error: cannot travel to the area as it is out of range of the list of areas you can travel to. This likely means the interface failed to update.");
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Error: cannot travel to the area as it does not exist.\nArea ID: {PlayerArea(_playerOne).ConnectedAreas[areaIndex]}");
+            }
         }
 
         private List<Area> DefaultAreas()
@@ -154,7 +169,7 @@ namespace PlanetFlyingFish.PresentationLayer
                 {
                     AreaID = "SurfRoom001",
                     AreaName = "Surface Room 001",
-                    ConnectedAreas = new List<string>{"SurfRoom002"},
+                    ConnectedAreas = new List<string>{ "SurfRoom002" },
                     LocationInfo = "You woke up in this cold, dark room.",
                     ArtName = "SurfaceRoomArt01"
                 },
@@ -170,7 +185,7 @@ namespace PlanetFlyingFish.PresentationLayer
                 {
                     AreaID = "SurfRoom003",
                     AreaName = "Surface Room 003",
-                    ConnectedAreas = new List<string>{ "SurfRoom001", "SurfRoom002"},
+                    ConnectedAreas = new List<string>{ "SurfRoom001", "SurfRoom002", "Quack" },
                     LocationInfo = "A duck-shaped room. (Don't ask why.)",
                     ArtName = "SurfaceRoomArt02"
                 }
@@ -356,7 +371,14 @@ namespace PlanetFlyingFish.PresentationLayer
                 List<string> accessibleAreas = new List<string>();
                 foreach (string id in PlayerArea(_playerOne).ConnectedAreas)
                 {
-                    accessibleAreas.Add(Areas[FindAreaPos(id, Areas)].AreaName);
+                    if (!(FindAreaPos(id, Areas) == -1))
+                    {
+                        accessibleAreas.Add(Areas[FindAreaPos(id, Areas)].AreaName);
+                    }
+                    else
+                    {
+                        accessibleAreas.Add("ERR: DOESNOTEXIST");
+                    }
                 }
                 return accessibleAreas;
             }

@@ -172,23 +172,23 @@ namespace PlanetFlyingFish.PresentationLayer
         /// return the list of strings as a single string, adding two new lines between each entry
         /// </summary>
         public string PriorityMessageDisplay
-		{
+        {
+            get { return _priorityMessageDisplay; }
             set
             {
                 _priorityMessageDisplay = MessageDisplayAsString(_priorityMessages);
                 OnPropertyChanged(nameof(PriorityMessageDisplay));
             }
-            get { return _priorityMessageDisplay; }
         }
 
         public string SideMessageDisplay
         {
+            get { return _sideMessageDisplay; }
             set
             {
                 _sideMessageDisplay = MessageDisplayAsString(_sideMessages);
                 OnPropertyChanged(nameof(SideMessageDisplay)); 
             }
-            get { return _sideMessageDisplay; }
         }
 
         public string PlayerInfoDisplay
