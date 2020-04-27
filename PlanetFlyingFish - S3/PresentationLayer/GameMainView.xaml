@@ -1,0 +1,484 @@
+﻿<Window x:Class="PlanetFlyingFish.PresentationLayer.GameMainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlanetFlyingFish"
+        mc:Ignorable="d"
+        Title="Main Window-- Planet Flying Fish" Height="450" Width="1000"
+        Background="DarkGray">
+    <!--Custom font is called Cave Story, taken from https://www.cufonfonts.com/font/cave-story
+    Accessible in the "Resources\Fonts" folder-->
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story"></Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story"></Setter>
+        </Style>
+        <!--The following code is based on Mr. Velis' project Aion.-->
+        <Style x:Key="MainPanelButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="Width" Value="75"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Foreground" Value="Blue"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid 
+                            Width="{TemplateBinding Width}" 
+                            Height="{TemplateBinding Height}" 
+                            ClipToBounds="False">
+                            <Rectangle 
+                                x:Name="innerRectangle" 
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch" 
+                                Fill="{TemplateBinding Background}" 
+                                RadiusX="10" 
+                                RadiusY="100">
+                                <Rectangle.Stroke>
+                                    <SolidColorBrush
+                                        Color="Black"
+                                        Opacity="0.5">
+                                    </SolidColorBrush>
+                                </Rectangle.Stroke>
+                            </Rectangle>
+                            <!-- Present Content (text) of the button. -->
+                            <DockPanel Name="myContentPresenterDockPanel">
+                                <ContentPresenter 
+                                    x:Name="myContentPresenter" 
+                                    Margin="2,2,2,2" 
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    TextBlock.FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story"
+                                    Content="{TemplateBinding Content}" 
+                                    TextBlock.Foreground="Black"/>
+                            </DockPanel>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--Set the button's color to something else when the button is selected.-->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Aqua" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--The following code is based on Mr. Velis' project Aion.-->
+        <Style x:Key="QuitButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="Width" Value="75"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Foreground" Value="Blue"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid 
+                            Width="{TemplateBinding Width}" 
+                            Height="{TemplateBinding Height}" 
+                            ClipToBounds="False">
+                            <Rectangle 
+                                x:Name="innerRectangle" 
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch" 
+                                Fill="{TemplateBinding Background}" 
+                                RadiusX="10" 
+                                RadiusY="100">
+                                <Rectangle.Stroke>
+                                    <SolidColorBrush
+                                        Color="Black"
+                                        Opacity="0.5">
+                                    </SolidColorBrush>
+                                </Rectangle.Stroke>
+                            </Rectangle>
+                            <!-- Present Content (text) of the button. -->
+                            <DockPanel Name="myContentPresenterDockPanel">
+                                <ContentPresenter 
+                                    x:Name="myContentPresenter" 
+                                    Margin="2,2,2,2" 
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    TextBlock.FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story"
+                                    Content="{TemplateBinding Content}" 
+                                    TextBlock.Foreground="Black"/>
+                            </DockPanel>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--Set the button's color to something else when the button is selected.-->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="PaleVioletRed" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--TextBox Style based on Velis' one.-->
+        <Style x:Key="MainPanelTextBoxStyle" TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Padding" Value="5,5,5,5"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border 
+                            Background="{TemplateBinding Background}"   
+                            x:Name="Bd" 
+                            BorderBrush="Black"  
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--
+        _______________________
+        
+        WINDOW
+        RESOURCES
+        END
+        HERE
+        ________________________
+        -->
+        
+    </Window.Resources>
+    <Grid>
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Width="950"
+            Height="400">
+            <StackPanel
+                Orientation="Vertical"
+                VerticalAlignment="Top"
+                Margin="0,0,0,0">
+                <Button
+                    x:Name="QuitButton"
+                    Style="{StaticResource QuitButtonStyle}"
+                    Width="75"
+                    Height="25"
+                    Margin="0,0,50,20" 
+                    FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                    FontSize="22" 
+                    Click="QuitButton_Click">Quit</Button>
+                <StackPanel
+                    Orientation="Vertical"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Width="225">
+                    <Label
+                        Margin="0,0,0,0"
+                        FontSize="31.5" 
+                        FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story">Primary Messages:</Label>
+                    <ScrollViewer
+                        VerticalScrollBarVisibility="auto"
+                        CanContentScroll="True"
+                        IsEnabled="True"
+                        MaxHeight="100"
+                        Margin="0,0,6,0">
+                        <TextBox
+                            x:Name="PriorityMessageBox"
+                            Style="{StaticResource MainPanelTextBoxStyle}"
+                            Width="200"
+                            MinHeight="100"
+                            Text="{Binding PriorityMessageDisplay, Mode=OneWay}"
+                            Background="White"
+                            TextWrapping="Wrap"
+                            FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                            FontSize="18"
+                            VerticalScrollBarVisibility="Visible"
+                            TextChanged="PriorityMessagesChanged"></TextBox>
+                    </ScrollViewer>
+                    <Label
+                        Margin="0,12,0,0"
+                        FontSize="31.5" 
+                        FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story">Side Messages:</Label>
+                    <ScrollViewer
+                        VerticalScrollBarVisibility="Auto"
+                        CanContentScroll="True"
+                        IsEnabled="True"
+                        MaxHeight="70"
+                        Margin="0,0,6,0">
+                        <TextBox
+                            x:Name="SideMessageBox"
+                            Style="{StaticResource MainPanelTextBoxStyle}"
+                            Width="200"
+                            MinHeight="70"
+                            Text="{Binding SideMessageDisplay, Mode=OneWay}"
+                            Background="White"
+                            TextWrapping="Wrap"
+                            FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                            FontSize="18"
+                            VerticalScrollBarVisibility="Visible"
+                            TextChanged="SideMessagesChanged"></TextBox>
+                    </ScrollViewer>
+                    <Label
+                        Margin="0,25,0,0"
+                        FontSize="31.5" 
+                        FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story">Location info:</Label>
+                    <ScrollViewer
+                        VerticalScrollBarVisibility="Auto"
+                        CanContentScroll="True"
+                        IsEnabled="True"
+                        MaxHeight="50"
+                        Margin="0,0,6,0">
+                        <TextBox
+                            x:Name="LocationInfoBlock"
+                            Style="{StaticResource MainPanelTextBoxStyle}"
+                            Width="200"
+                            MinHeight="50"
+                            TextWrapping="Wrap"
+                            Text="{Binding LocationInfo, Mode=OneWay}"
+                            Background="White" 
+                            FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                            FontSize="18"
+                            TextDecorations="{x:Null}"/>
+                    </ScrollViewer>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel
+                MinWidth="320"
+                Orientation="Vertical"
+                HorizontalAlignment="Center">
+                <Image 
+                    HorizontalAlignment="Center" 
+                    Height="300" 
+                    Margin="0,0,0,0" 
+                    VerticalAlignment="Top"
+                    Source="{Binding CentralImageDisplayPath}"/>
+                <StackPanel
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    MaxWidth="310">
+                    <ComboBox
+                        x:Name="MapArtSelector"
+                        Width="100"
+                        Margin="0,8,0,0"
+                        FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                        FontSize="22"
+                        SelectionChanged="MapArtSelector_SelectionChanged">
+                        <ComboBoxItem
+                            x:Name="Map"
+                            IsSelected="True">
+                            Map
+                        </ComboBoxItem>
+                        <ComboBoxItem
+                            x:Name="Art">
+                            Art
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <Label
+                        x:Name="LocationLabel" 
+                        Margin="20,0,0,0"
+                        Content="{Binding AreaNameDisplay}" 
+                        FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                        FontSize="22"></Label>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel
+                Orientation="Vertical"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Width="225">
+                <ComboBox
+                    x:Name="TravelToLocationCombo"
+                    Width="190" 
+                    Height="22"
+                    FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                    FontSize="18"
+                    ItemsSource="{Binding AccessibleAreas}"
+                    SelectedItem="{Binding AccessibleAreas[0]}"></ComboBox>
+                <Button
+                    x:Name="ConfirmTravelButton"
+                    Style="{StaticResource MainPanelButtonStyle}"
+                    Content="Confirm Travel"
+                    Width="100"
+                    Height="30"
+                    Margin="0,12,0,0" 
+                    FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                    FontSize="18" Click="ConfirmTravelButton_Click"/>
+                <StackPanel
+                    Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    Margin="0,20,0,0">
+                    <TextBlock
+                        x:Name="PlayerInfoBlock"
+                        Height="45"
+                        Text="{Binding PlayerInfoDisplay}" 
+                        FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                        FontSize="22"></TextBlock>
+                </StackPanel>
+                <StackPanel
+                    Orientation="Vertical"
+                    Margin="0,20,0,0">
+                    <ComboBox
+                        x:Name="ItemSelect"
+                        Width="175"
+                        Height="22" 
+                        FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                        FontSize="18"
+                        ItemsSource="{Binding AreaItems}"
+                        SelectedItem="{Binding AreaItems[0]}"></ComboBox>
+                    <Grid
+                        Width="175"
+                        Height="75"
+                        Margin="0,10,0,0">
+                        <Button
+                            x:Name="InvestigateButton"
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            Content="Investigate"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Width="75"
+                            Height="30" 
+                            FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                            FontSize="16" Click="InvestigateButton_Click"/>
+                        <Button
+                            x:Name="BattleButton"
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            Content="Battle"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Width="75"
+                            Height="30" 
+                            FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                            FontSize="16"/>
+                        <Button
+                            x:Name="GiveItemButton"
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            Content="Give Item"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Width="75"
+                            Height="30" 
+                            FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                            FontSize="16"/>
+                        <Button
+                            x:Name="TakeItemButton"
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            Content="Take Item"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Width="75"
+                            Height="30" 
+                            FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                            FontSize="16" Click="TakeItemButton_Click"/>
+                    </Grid>
+                </StackPanel>
+                
+            </StackPanel>
+            <StackPanel
+                Orientation="Vertical"
+                Width="170">
+                <Label
+                    Margin="0,6,0,0"
+                    FontSize="18"
+                    
+                    FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story">
+                    Selected item description:</Label>
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Visible"
+                    CanContentScroll="True"
+                    IsEnabled="True"
+                    MaxHeight="50"
+                    Margin="0,0,6,0">
+                    <TextBox
+                        x:Name="ItemDescriptionBlock"
+                        Style="{StaticResource MainPanelTextBoxStyle}"
+                        Width="155"
+                        MinHeight="50"
+                        TextWrapping="Wrap"
+                        Text="{Binding SelectedInvItem.Description}"
+                        Background="White" 
+                        FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" 
+                        FontSize="18"
+                        TextDecorations="{x:Null}"/>
+                </ScrollViewer>
+                <DataGrid
+                    x:Name="ItemsDisplay"
+                    Height="250"
+                    Margin="0,6,0,0"
+                    FontFamily="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story"
+                    FontSize="22"
+                    ItemsSource="{Binding PlayerOne.ItemInventory}"
+                    SelectedItem="{Binding SelectedInvItem}"
+                    AutoGenerateColumns="False"
+                    CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
+                            Header="Name" 
+                            IsReadOnly="True"                 
+                            Binding="{Binding Name, Mode=OneWay}"
+                            Width="*"
+                            FontSize="18"
+                            >
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.FontFamily" Value="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn 
+                            Header="ID" 
+                            IsReadOnly="True"                 
+                            Binding="{Binding ID, Mode=OneWay}"
+                            Width="40"
+                            FontSize="18"
+                            >
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.FontFamily" Value="/PlanetFlyingFish;component/Resource/Fonts/#Cave Story" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,5,0,0">
+                    <StackPanel
+                    Orientation="Vertical">
+                        <Button
+                            x:Name="DropButton"
+                            Content="Drop Item"
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            FontSize="16"
+                            Width="130" 
+                            Height="25"
+                            Click="DropButton_Click"></Button>
+                        <Button
+                            x:Name="UseButton"
+                            Content="Use Item"
+                            Style="{StaticResource MainPanelButtonStyle}"
+                            FontSize="16"
+                            Width="130" 
+                            Height="25"
+                            Click="UseButton_Click"
+                            Margin="0,5,0,0"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

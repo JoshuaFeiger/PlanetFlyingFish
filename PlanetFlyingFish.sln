@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetFlyingFish_S1", "PlanetFlyingFish - S1\PlanetFlyingFish_S1.csproj", "{7F2D8AAC-1984-475B-B101-121ACF98C8F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetFlyingFish_S2", "PlanetFlyingFish - S2\PlanetFlyingFish_S2.csproj", "{0851D7BC-87EF-47F9-9419-9BF44F0A3813}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetFlyingFish_S3", "PlanetFlyingFish - S3\PlanetFlyingFish_S3.csproj", "{0851D7BC-87EF-47F9-9419-9BF44F0A3813}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetFlyingFish_S2", "PlanetFlyingFish - S2\PlanetFlyingFish_S2.csproj", "{781934E5-8954-460F-8682-36E85075CBE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0851D7BC-87EF-47F9-9419-9BF44F0A3813}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0851D7BC-87EF-47F9-9419-9BF44F0A3813}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0851D7BC-87EF-47F9-9419-9BF44F0A3813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{781934E5-8954-460F-8682-36E85075CBE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{781934E5-8954-460F-8682-36E85075CBE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{781934E5-8954-460F-8682-36E85075CBE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{781934E5-8954-460F-8682-36E85075CBE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

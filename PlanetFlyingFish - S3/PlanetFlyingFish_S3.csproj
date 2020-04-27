@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{781934E5-8954-460F-8682-36E85075CBE7}</ProjectGuid>
+    <ProjectGuid>{0851D7BC-87EF-47F9-9419-9BF44F0A3813}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>PlanetFlyingFish</RootNamespace>
     <AssemblyName>PlanetFlyingFish</AssemblyName>
@@ -64,6 +64,8 @@
     <Compile Include="BusinessLayer\GameBusiness.cs" />
     <Compile Include="DataLayer\GameData.cs" />
     <Compile Include="Models\AnyNoun.cs" />
+    <Compile Include="Models\AnyNounInventoryDisplay.cs" />
+    <Compile Include="Models\AnyObject.cs" />
     <Compile Include="Models\Area.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\ObservableObject.cs" />
