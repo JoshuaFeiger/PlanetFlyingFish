@@ -47,8 +47,5 @@ namespace PlanetFlyingFish.Models
             get { return _itemInventory; }
             set { _itemInventory = value; }
         }
-
-        
-
     }
 }

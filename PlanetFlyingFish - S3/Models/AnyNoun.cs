@@ -39,10 +39,19 @@ namespace PlanetFlyingFish.Models
         protected string _description;
         
         protected List<ActionType> _actionsOnInteract;
+
+        protected List<string> _interactActionsMessages;
+
         
+
         protected string _useMessage;
 
         protected List<ActionType> _actionsOnUse;
+
+        protected List<string> _useActionsMessages;
+
+        
+
 
         protected List<AnyNoun> _itemsToGive;
 
@@ -71,7 +80,7 @@ namespace PlanetFlyingFish.Models
 			get { return _healthPoints; }
 			set 
             {
-                if ((_healthPoints + value) < MaxHP)
+                if (!((_healthPoints + value) < MaxHP) || (MaxHP < 1) /*|| (MaxHP == null)*/)
                 {
                     _healthPoints = value;
                 }
@@ -106,6 +115,12 @@ namespace PlanetFlyingFish.Models
             set { _actionsOnInteract = value; }
         }
 
+        public List<string> InteractActionsMessages
+        {
+            get { return _interactActionsMessages; }
+            set { _interactActionsMessages = value; }
+        }
+
         public string UseMessage
         {
             get { return _useMessage; }
@@ -116,6 +131,12 @@ namespace PlanetFlyingFish.Models
         {
             get { return _actionsOnUse; }
             set { _actionsOnUse = value; }
+        }
+
+        public List<string> UseActionsMessages
+        {
+            get { return _useActionsMessages; }
+            set { _useActionsMessages = value; }
         }
 
         public List<AnyNoun> ItemsToGive

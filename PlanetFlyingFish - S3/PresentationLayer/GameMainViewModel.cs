@@ -142,7 +142,6 @@ namespace PlanetFlyingFish.PresentationLayer
             return _areas[player.CurrentAreaPos(_areas)];
         }
 
-
         public void TravelToArea(int areaIndex)
         {
             if (!(AccessibleAreas[areaIndex] == "ERR: DOESNOTEXIST"))
@@ -167,6 +166,47 @@ namespace PlanetFlyingFish.PresentationLayer
             }
         }
 
+        public void DropItemFromInventory(AnyNoun item, Player player)
+        {
+            if (!(item == null))
+            {
+                PlayerArea(player).Nouns.Add(item);
+                player.ItemInventory.Remove(item);
+                OnPropertyChanged(nameof(AreaItems));
+                OnPropertyChanged(nameof(InventoryDisplay));
+            }
+        }
+
+        public void MoveIndexItemToInventory(int index, Player player)
+        {
+            if (!(PlayerArea(player).Nouns.Count == 0))
+            {
+                MoveItemToInventory(PlayerArea(player).Nouns[index], player);
+            }
+        }
+
+        public void MoveItemToInventory(AnyNoun item, Player player)
+        {
+            if (!(item == null) && PlayerArea(player).Nouns.Contains(item) && (item.CanPickUp == true))
+            {
+                player.ItemInventory.Add(item);
+                PlayerArea(player).Nouns.Remove(item);
+                OnPropertyChanged(nameof(InventoryDisplay));
+                OnPropertyChanged(nameof(AreaItems));
+                string messageText = PerformItemActions(item, player, item.ActionsOnInteract, item.InteractActionsMessages);
+                item.ActionsOnInteract = new List<AnyNoun.ActionType> { AnyNoun.ActionType.NoAction };
+                item.InteractActionsMessages = null;
+                if (messageText != "")
+                {
+                    MessageBox.Show(messageText);
+                }
+            }
+            else if (!item.CanPickUp == true)
+            {
+                MessageBox.Show("You cannot pick up this item.");
+            }
+        }
+
         public void InvestigateIndexItem(int index, Player player)
         {
             if (!(PlayerArea(player).Nouns.Count == 0))
@@ -177,8 +217,9 @@ namespace PlanetFlyingFish.PresentationLayer
 
         public void InvestigateItem(AnyNoun item, Player player)
         {
-            string messageText = item.Description + PerformItemActions(item, player, item.ActionsOnInteract);
+            string messageText = item.Description + PerformItemActions(item, player, item.ActionsOnInteract, item.InteractActionsMessages);
             item.ActionsOnInteract = new List<AnyNoun.ActionType> { AnyNoun.ActionType.NoAction };
+            item.InteractActionsMessages = null;
             if (messageText == "")
             {
                 messageText = ("No problem here.");
@@ -190,8 +231,9 @@ namespace PlanetFlyingFish.PresentationLayer
         {
             if (!(item == null))
             {
-                string messageText = item.UseMessage + PerformItemActions(item, player, item.ActionsOnUse);
+                string messageText = item.UseMessage + PerformItemActions(item, player, item.ActionsOnUse, item.UseActionsMessages);
                 item.ActionsOnUse = new List<AnyNoun.ActionType> { AnyNoun.ActionType.NoAction };
+                item.UseActionsMessages = null;
                 if (messageText == "")
                 {
                     messageText = ("Nothing happens!");
@@ -200,7 +242,7 @@ namespace PlanetFlyingFish.PresentationLayer
             }
         }
 
-        public string PerformItemActions(AnyNoun item, Player player,  List<AnyNoun.ActionType> actions)
+        public string PerformItemActions(AnyNoun item, Player player,  List<AnyNoun.ActionType> actions, List<string> actionsMessages)
         {
             //todo: do things for actions
             string messageText = "";
@@ -208,6 +250,10 @@ namespace PlanetFlyingFish.PresentationLayer
             {
                 foreach (AnyNoun.ActionType action in actions)
                 {
+                    if (!(actionsMessages == null || actionsMessages[actions.IndexOf(action)] == null || actionsMessages[actions.IndexOf(action)] == ""))
+                    {
+                        messageText = (messageText + actionsMessages[actions.IndexOf(action)]);
+                    }
                     switch (action)
                     {
                         case AnyNoun.ActionType.ItemGet:
@@ -246,40 +292,6 @@ namespace PlanetFlyingFish.PresentationLayer
             return messageText;
         }
 
-        public void MoveIndexItemToInventory(int index, Player player)
-        {
-            if (!(PlayerArea(player).Nouns.Count == 0))
-            {
-                MoveItemToInventory(PlayerArea(player).Nouns[index], player);
-            }
-        }
-
-        public void MoveItemToInventory(AnyNoun item, Player player)
-        {
-            if (!(item == null) && (item.CanPickUp == true))
-            {
-                player.ItemInventory.Add(item);
-                PlayerArea(player).Nouns.Remove(item);
-                OnPropertyChanged(nameof(InventoryDisplay));
-                OnPropertyChanged(nameof(AreaItems));
-            }
-            else if (!item.CanPickUp == true)
-            {
-                MessageBox.Show("You cannot pick up this item.");
-            }
-        }
-
-        public void DropItemFromInventory(AnyNoun item, Player player)
-        {
-            if(!(item == null))
-            {
-                PlayerArea(player).Nouns.Add(item);
-                player.ItemInventory.Remove(item);
-                OnPropertyChanged(nameof(AreaItems));
-                OnPropertyChanged(nameof(InventoryDisplay));
-            }
-        }
-
         private List<Area> DefaultAreas()
         {
             List<Area> defaultAreas = new List<Area>
@@ -313,6 +325,28 @@ namespace PlanetFlyingFish.PresentationLayer
                             }
                             },
                             ActionsOnUse = new List<AnyNoun.ActionType>{AnyNoun.ActionType.HPUp},
+                            UseActionsMessages = new List<string>{"You find a battery inside, and drain its power."},
+                            HPUpLevel = 10
+                        },
+                        new AnyObject
+                        {
+                            Name = $"Twisted metal",
+                            CanPickUp = true,
+                            HealthPoints = 10,
+                            ID = 2634,
+                            Description = "Seems to be used to hold papers together.",
+                            ActionsOnInteract = new List<AnyNoun.ActionType>{AnyNoun.ActionType.ItemGet},
+                            ItemsToGive = new List<AnyNoun>
+                            {
+                            new AnyObject
+                            {
+                                Name = $"Papers",
+                                CanPickUp = true,
+                                HealthPoints = 10,
+                                ID = 1239,
+                                Description = "They contain some data about the planet's atmosphere."
+                            }
+                            },
                             HPUpLevel = 10
                         }
                     }

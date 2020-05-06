@@ -9,7 +9,7 @@ namespace PlanetFlyingFish.Models
 {
     public class Character : AnyNoun
     {
-        public enum EmotionalState
+        public enum Emotion
         {
             None,
             Happy,
@@ -48,5 +48,14 @@ namespace PlanetFlyingFish.Models
         {
             //Something something "{_name} doesn't respond. Maybe something's wrong..."
         }
+
+        protected Emotion _emotionalState;
+
+        public Emotion EmotionalState
+        {
+            get { return _emotionalState; }
+            set { _emotionalState = value; }
+        }
+
     }
 }
