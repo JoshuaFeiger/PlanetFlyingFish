@@ -84,7 +84,6 @@ namespace PlanetFlyingFish.PresentationLayer
                     CentralImageDisplayPath = $"\\Resource\\Images\\{MapArtName}.png";
                     break;
                 case "Art":
-                    //todo: add in actual art name here
                     CentralImageDisplayPath = $"\\Resource\\Images\\SurfaceRoomArt01.png";
                     break;
                 default:

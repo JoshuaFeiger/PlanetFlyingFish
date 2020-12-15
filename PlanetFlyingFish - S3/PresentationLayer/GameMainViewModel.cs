@@ -68,8 +68,6 @@ namespace PlanetFlyingFish.PresentationLayer
             MapArtName = "Map01";
             UpdatePriorityMessages();
             UpdateSideMessages();
-            //todo: Remove this when the time comes to remove this
-            _playerOne.ItemInventory = new System.Collections.ObjectModel.ObservableCollection<AnyNoun>();
             
         }
 
@@ -244,7 +242,6 @@ namespace PlanetFlyingFish.PresentationLayer
 
         public string PerformItemActions(AnyNoun item, Player player,  List<AnyNoun.ActionType> actions, List<string> actionsMessages)
         {
-            //todo: do things for actions
             string messageText = "";
             if (!(actions == null))
             {
@@ -264,7 +261,6 @@ namespace PlanetFlyingFish.PresentationLayer
                             }
                             break;
                         case AnyNoun.ActionType.Battle:
-                            //todo: might need to rework the implementation of battles to work in this ViewModel instead
                             item.Battle(player);
                             break;
                         case AnyNoun.ActionType.BattleNewEnemies:
